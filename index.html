@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080d16">
+  <meta name="description" content="A rogue operative. Fifteen waves. One corrupted intelligence. An original, offline-ready cyberpunk survival shooter.">
+  <meta property="og:title" content="NEON//BREACH">
+  <meta property="og:description" content="Enter the infected city. Break the defense network. Silence NEXUS.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://neon-breach.games.bu.app/cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>NEON//BREACH | Break the Network</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080d16'/%3E%3Cpath d='M13 47V17h8l22 30h8V17h-9v22L25 17H13M26 47l15-30' fill='none' stroke='%2358ffdd' stroke-width='5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="game" aria-label="NEON BREACH game arena. Move with WASD, aim with the mouse, hold left click to fire, Space to dash." tabindex="0"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div id="app">
+    <header class="topbar"><a class="brand" href="#" aria-label="NEON BREACH home"><span class="brand-icon">N<span>//</span></span><span>BREACH PROTOCOL<span class="micro">INDEPENDENT OPERATIVE NETWORK</span></span></a><div class="top-status"><i></i><span>LOCAL CONNECTION</span><b>2097.08.16</b><button id="audio-toggle" class="icon-button" aria-label="Mute audio">SOUND ON</button></div></header>
+    <main id="menu" class="screen menu-screen">
+      <section class="menu-copy">
+        <div class="eyebrow"><span class="tiny-block"></span> SECTOR 07 / THE LAST CONNECTION</div>
+        <h1><span>NEON<span class="slashes">//</span></span><span class="breach-word">BREACH<span class="title-dot">.</span></span></h1>
+        <div class="title-sub"><span class="rule"></span> BREAK THE NETWORK. TAKE BACK THE CITY.</div>
+        <p class="story">The city's defense network has turned against us.<br>You're the last signal NEXUS can't control.</p>
+        <div class="status-block"><div><span>SYSTEM STATUS</span><b><i></i> CRITICAL</b></div><div><span>NEXUS NETWORK</span><b>CORRUPTED</b></div></div>
+        <button class="primary start-button" id="start"><span class="button-index">01</span><span>START BREACH</span><span class="button-arrow">&#8599;</span></button>
+        <nav class="menu-links"><button data-panel="how">HOW TO PLAY <span>&#8599;</span></button><button data-panel="settings">SETTINGS <span>&#8599;</span></button><button data-panel="credits">CREDITS <span>&#8599;</span></button></nav>
+        <div class="record"><span>PERSONAL BEST</span><b id="menu-best">000000</b><span id="menu-clears">NO SUCCESSFUL BREACHES</span></div>
+      </section>
+      <aside class="operative-label"><div><span class="live-dot"></span> OPERATIVE ONLINE</div><b>GHOST / 01</b><p>NEURAL LINK STABLE<br>BLASTER SYSTEM ARMED</p><span class="coordinates">35.6895 N / 139.6917 E</span></aside>
+      <div class="menu-bottom"><span><i></i> 15 WAVES. ONE CORE. NO BACKUP.</span><span>ORIGINAL CANVAS SHOOTER <b>V1.0</b></span></div>
+    </main>
+    <section id="hud" hidden aria-label="Game status">
+      <div class="hud-top"><div class="player-panel"><div class="hud-label"><span class="cyan">&#9670; GHOST / 01</span><span id="hp-text">100 / 100</span></div><div class="health-track"><i id="hp-bar"></i></div><div class="shield-line"><span>NANO SHIELD</span><div><i id="shield-bar"></i></div><b id="shield-text">0</b></div></div><div class="wave-panel"><div class="micro" id="sector-text">OUTER DISTRICT</div><b>WAVE <span id="wave-text">01</span><small> / 15</small></b><div id="remaining-text">ESTABLISHING LINK</div></div><div class="score-panel"><div class="hud-label"><span>SCORE</span><button id="pause-button" aria-label="Pause game">II</button></div><b id="score-text">000000</b><div class="micro">BEST <span id="best-text">000000</span></div></div></div>
+      <div id="boss-hud" hidden><div><span id="boss-name">WARDEN</span><span id="boss-phase">PHASE 01</span></div><div class="boss-track"><i id="boss-bar"></i></div></div>
+      <div class="objective"><span id="objective-text">PURGE THE DEFENSE NETWORK</span><b id="combo-text"></b></div>
+      <div class="hud-bottom"><div class="energy-panel"><div class="hud-label"><span>ENERGY</span><b id="energy-text">100%</b></div><div class="energy-track"><i id="energy-bar"></i></div><small><kbd>E</kbd> EMP PULSE <span>70 ENERGY</span></small></div><div class="weapon-panel"><div class="weapon-glyph">&#10219;&#10219;</div><div><span class="micro">PRIMARY / INFINITE AMMO</span><b>ARC BLASTER <span id="weapon-level">MK.01</span></b></div></div><div class="dash-panel"><div class="hud-label"><span><kbd>SPACE</kbd> PHASE DASH</span><b id="dash-text">READY</b></div><div class="dash-track"><i id="dash-bar"></i></div><small id="dash-hint">18 ENERGY / BRIEF INVULNERABILITY</small></div></div>
+      <div class="xp-line"><i id="xp-bar"></i><span id="xp-text">LVL 01</span></div>
+    </section>
+    <div id="announcement" class="announcement" hidden><small id="announcement-label"></small><h2 id="announcement-title"></h2><p id="announcement-sub"></p></div>
+    <div id="toast" role="status" hidden></div>
+    <div id="modal" class="modal" hidden><section class="modal-card" id="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"></section></div>
+    <div id="touch-controls" hidden><div id="move-stick" class="stick"><span></span><small>MOVE</small></div><div id="aim-stick" class="stick"><span></span><small>AIM / FIRE</small></div><button id="touch-dash">DASH</button><button id="touch-pulse">EMP</button></div>
+  </div>
+  <script src="js/core.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/enemies.js"></script>
+  <script src="js/bosses.js"></script>
+  <script src="js/upgrades.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
